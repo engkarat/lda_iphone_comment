@@ -52,8 +52,9 @@ def lda(np_data, k):
 if __name__=="__main__":
     # hyperparams
     k = 5
-    print("Loading input file ...")
-    np_data = np.genfromtxt('out_file/cleaned_data_matrix.csv', delimiter=',')
+    file_name = 'out_file/cleaned_data_matrix.csv'
+    print("Loading input file : {}".format(file_name))
+    np_data = np.genfromtxt(, delimiter=',')
     for i in range(500):
         if (i+1)%100 == 0:
             print('Running iteration {}'.format(i+1))
