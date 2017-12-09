@@ -6,21 +6,30 @@ k = 5
 
 def lda(np_data, k):
     n_row, n_col = np_data.shape
-    np_topic = np.random.rand(n_row, n_col)
-    dkm, kwm = construct_matrix(np_topic, k)
-    print()
+    np_topic = np.random.rand(n_row, n_col)*k
+    np_topic = np_topic.astype(np.int)
+    dkm, kwm = construct_matrix(np_data, np_topic, k)
+    print(dkm)
     return
 
-def construct_matrix(np_data, k):
+def construct_matrix(np_data, np_topic, k):
     n_row, n_col = np_data.shape
     dkm = np.zeros([n_row, k])
     kwm = np.zeros([n_col, k])
     for n in range(n_row):
-        row_group, row_freq = np.unique(np_data[n, :], return_counts=True)
-        dkm[n, :] = row_freq
+        topic_count = []
+        for i in range(k):
+            row = np_data[n, :]
+            counted = np.sum(row[row==i])
+            topic_count.append(counted)
+        dkm[n, :] = np.array(topic_count)
     for n in range(n_col):
-        col_group, col_freq = np.unique(np_data[:, n], return_counts=True)
-        kwm[n, :] = col_freq
+        topic_count = []
+        for i in range(k):
+            row = np_data[:, n]
+            counted = np.sum(row[row==i])
+            topic_count.append(counted)
+        dkm[n, :] = np.array(topic_count)
     return dkm, kwm
 
 if __name__=="__main__":
