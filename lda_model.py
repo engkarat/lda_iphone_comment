@@ -54,7 +54,7 @@ if __name__=="__main__":
     k = 5
     file_name = 'out_file/cleaned_data_matrix.csv'
     print("Loading input file : {}".format(file_name))
-    np_data = np.genfromtxt(, delimiter=',')
+    np_data = np.genfromtxt(file_name, delimiter=',')
     for i in range(500):
         if (i+1)%100 == 0:
             print('Running iteration {}'.format(i+1))
