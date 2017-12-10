@@ -56,7 +56,15 @@ if __name__=="__main__":
     k = 5
     file_name = 'out_file/sampled_set.csv'
     logging.info("Loading input file : {}".format(file_name))
-    np_data = np.genfromtxt(file_name, delimiter=',')
+    # np_data = np.genfromtxt(file_name, delimiter=',')
+    with open(file_name) as f:
+        total = []
+        for i, line in enumerate(f):
+            lin = line.split(',')
+            total.append(lin)
+            if i % 1000 == 0:
+                logging.info("Loaded:".format(i))
+    np_data = np.array(total, dtype=np.int)
     logging.info("Loading completed")
     for i in range(500):
         if (i+1)%100 == 0:
