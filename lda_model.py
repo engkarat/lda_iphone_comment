@@ -94,8 +94,8 @@ if __name__=="__main__":
     # p = Pool(9)
     # perp_list = p.map(main, k)
     # print(perp_list)
-    try:
-        k = sys.argv[1]
-        main(k)
-    except:
-        print("Please specify K")
+    # try:
+    k = sys.argv[1]
+    main(k)
+    # except:
+    #     print("Please specify K")
