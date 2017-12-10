@@ -90,7 +90,11 @@ def main(k):
     logging.info("Perplexity k={} : {}".format(k, perp))
 
 if __name__=="__main__":
-    k = [2,3,4,5,6,7,8,9,10]
-    p = Pool(9)
-    perp_list = p.map(main, k)
-    print(perp_list)
+    # k = [2,3,4,5,6,7,8,9,10]
+    # p = Pool(9)
+    # perp_list = p.map(main, k)
+    # print(perp_list)
+    try:
+        k = sys.argv[1]
+    except:
+        print("Please specify K")
