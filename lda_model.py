@@ -49,11 +49,29 @@ def lda(np_data, k):
             if np_data[row, col]:
                 freq = np_data[row, col]
                 update_lda(freq, np_topic, dkm, kwm, row, col, k)
-    return dkm, kwm
+    return dkm, kwm, np_topic
+
+def perplexity(np_data, np_topic, dkm, kwm):
+    n_row, n_col = np_data.shape
+    total_prop = []
+    for row in range(n_row):
+        for col in range(n_col):
+            if np_data[row, col]:
+                freq = np_data[row, col]
+                for i in range(k):
+                    if np.sum(dkm[row, :]) and np.sum(kwm[col, :]) and dkm[row, i] and kwm[col, i]:
+                        prop = (
+                            dkm[row, i]/np.sum(dkm[row, :]))*(kwm[col, i]/np.sum(kwm[col, :])
+                        )
+                        # print(prop)
+                        total_prop.append(np.log(prop)*freq*-1)
+                    else:
+                        total_prop.append(0)
+    return np.exp(np.sum(total_prop)/np.sum(np_data))
 
 if __name__=="__main__":
     # hyperparams
-    k = 5
+    # k = 5
     file_name = 'out_file/sampled_set.csv'
     logging.info("Loading input file : {}".format(file_name))
     # np_data = np.genfromtxt(file_name, delimiter=',')
@@ -63,12 +81,15 @@ if __name__=="__main__":
             lin = line.split(',')
             total.append(lin)
             if i % 1000 == 0:
-                logging.info("Loaded:".format(i))
+                logging.info("Loaded: {}".format(i))
     np_data = np.array(total, dtype=np.int)
     logging.info("Loading completed")
-    for i in range(500):
-        if (i+1)%100 == 0:
-            logging.info('Running iteration {}'.format(i+1))
-        dkm, kwm = lda(np_data, k)
-    np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
-    np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
+    for k in range(2,10):
+        for i in range(100):
+            if (i+1)%10 == 0:
+                logging.info('Running iteration {}'.format(i+1))
+            dkm, kwm, np_topic = lda(np_data, k)
+        # np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
+        # np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
+        perp = perplexity(np_data, np_topic, dkm, kwm)
+        logging.info("Perplexity k={} : {}".format(k, perp))
