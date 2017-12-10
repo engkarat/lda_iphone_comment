@@ -84,7 +84,7 @@ def main(k):
     np_data = np.array(total, dtype=np.int)
     logging.info("Loading completed")
     for i in range(100):
-        if (i+1)%10 == 0:
+        if (i+1)%20 == 0:
             logging.info('Running iteration {}'.format(i+1))
         dkm, kwm, np_topic = lda(np_data, k)
     perp = perplexity(np_data, np_topic, dkm, kwm)
