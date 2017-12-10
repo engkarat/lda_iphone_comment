@@ -69,8 +69,8 @@ def perplexity(np_data, np_topic, dkm, kwm):
                         total_prop.append(np.log(prop)*freq)
                     else:
                         total_prop.append(0)
-                    ans_prop = np.max(total_prop)
-                    accu_prop.append(ans_prop)
+                ans_prop = np.max(total_prop)
+                accu_prop.append(ans_prop)
     return np.exp(np.sum(accu_prop)/np.sum(np_data)*-1)
 
 def main(k):
