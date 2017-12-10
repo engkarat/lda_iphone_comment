@@ -10,5 +10,5 @@ with open('out_file/cleaned_data_matrix.csv') as f:
 reloaded = np.array(total, dtype=np.int)
 print(reloaded.shape)
 
-test_set = reloaded[10000:15000, :]
-np.savetxt('out_file/sampled_set.csv', test_set, fmt='%d', delimiter=',')
+test_set = reloaded[10000:11000, :]
+np.savetxt('out_file/sampled_small_set.csv', test_set, fmt='%d', delimiter=',')
