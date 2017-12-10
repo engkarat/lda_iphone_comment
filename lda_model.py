@@ -54,7 +54,7 @@ def lda(np_data, k):
 if __name__=="__main__":
     # hyperparams
     k = 5
-    file_name = 'out_file/test_set.csv'
+    file_name = 'out_file/cleaned_data_matrix.csv'
     logging.info("Loading input file : {}".format(file_name))
     np_data = np.genfromtxt(file_name, delimiter=',')
     logging.info("Loading completed")
