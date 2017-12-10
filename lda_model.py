@@ -1,5 +1,6 @@
 import numpy as np
 import logging
+import sys
 logging.basicConfig(format='%(asctime)s %(message)s',level=logging.INFO)
 
 
@@ -72,9 +73,13 @@ def perplexity(np_data, np_topic, dkm, kwm):
 if __name__=="__main__":
     # hyperparams
     # k = 5
+    try:
+        k = sys.argv[1]
+    except:
+        print('Please specify k value')
+        exit()
     file_name = 'out_file/tiny_set.csv'
     logging.info("Loading input file : {}".format(file_name))
-    # np_data = np.genfromtxt(file_name, delimiter=',')
     with open(file_name) as f:
         total = []
         for i, line in enumerate(f):
@@ -84,12 +89,11 @@ if __name__=="__main__":
                 logging.info("Loaded: {}".format(i))
     np_data = np.array(total, dtype=np.int)
     logging.info("Loading completed")
-    for k in range(2,10):
-        for i in range(100):
-            if (i+1)%10 == 0:
-                logging.info('Running iteration {}'.format(i+1))
-            dkm, kwm, np_topic = lda(np_data, k)
-        # np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
-        # np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
-        perp = perplexity(np_data, np_topic, dkm, kwm)
-        logging.info("Perplexity k={} : {}".format(k, perp))
+    for i in range(100):
+        if (i+1)%10 == 0:
+            logging.info('Running iteration {}'.format(i+1))
+        dkm, kwm, np_topic = lda(np_data, k)
+    # np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
+    # np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
+    perp = perplexity(np_data, np_topic, dkm, kwm)
+    logging.info("Perplexity k={} : {}".format(k, perp))
