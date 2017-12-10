@@ -55,11 +55,12 @@ def lda(np_data, k):
 
 def perplexity(np_data, np_topic, dkm, kwm):
     n_row, n_col = np_data.shape
-    total_prop = []
+    accu_prop = []
     for row in range(n_row):
         for col in range(n_col):
             if np_data[row, col]:
                 freq = np_data[row, col]
+                total_prop = []
                 for i in range(k):
                     if np.sum(dkm[row, :]) and np.sum(kwm[col, :]) and dkm[row, i] and kwm[col, i]:
                         prop = (
@@ -68,7 +69,9 @@ def perplexity(np_data, np_topic, dkm, kwm):
                         total_prop.append(np.log(prop)*freq)
                     else:
                         total_prop.append(0)
-    return np.exp(np.sum(total_prop)/np.sum(np_data)*-1)
+                    ans_prop = np.max(total_prop)
+                    accu_prop.append(ans_prop)
+    return np.exp(np.sum(accu_prop)/np.sum(np_data)*-1)
 
 def main(k):
     file_name = 'out_file/tiny_set.csv'
