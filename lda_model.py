@@ -1,6 +1,7 @@
 import numpy as np
 import logging
 import sys
+from multiprocessing import Pool
 logging.basicConfig(format='%(asctime)s %(message)s',level=logging.INFO)
 
 
@@ -70,15 +71,7 @@ def perplexity(np_data, np_topic, dkm, kwm):
                         total_prop.append(0)
     return np.exp(np.sum(total_prop)/np.sum(np_data))
 
-if __name__=="__main__":
-    # hyperparams
-    # k = 5
-    try:
-        k = sys.argv[1]
-        k = int(k)
-    except:
-        print('Please specify k value')
-        exit()
+def main(k):
     file_name = 'out_file/tiny_set.csv'
     logging.info("Loading input file : {}".format(file_name))
     with open(file_name) as f:
@@ -94,7 +87,11 @@ if __name__=="__main__":
         if (i+1)%10 == 0:
             logging.info('Running iteration {}'.format(i+1))
         dkm, kwm, np_topic = lda(np_data, k)
-    # np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
-    # np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
     perp = perplexity(np_data, np_topic, dkm, kwm)
     logging.info("Perplexity k={} : {}".format(k, perp))
+
+if __name__=="__main__":
+    k = [2,3,4,5,6,7,8,9,10]
+    p = Pool(9)
+    perp_list = p.map(main, k)
+    print(perp_list)
