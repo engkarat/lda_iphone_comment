@@ -1,4 +1,6 @@
 import numpy as np
+import logging
+logging.basicConfig(format='%(asctime)s %(message)s',level=logging.INFO)
 
 
 def update_lda(freq, np_topic, dkm, kwm, row, col, k):
@@ -52,12 +54,13 @@ def lda(np_data, k):
 if __name__=="__main__":
     # hyperparams
     k = 5
-    file_name = 'out_file/cleaned_data_matrix.csv'
-    print("Loading input file : {}".format(file_name))
+    file_name = 'out_file/test_set.csv'
+    logging.info("Loading input file : {}".format(file_name))
     np_data = np.genfromtxt(file_name, delimiter=',')
+    logging.info("Loading completed")
     for i in range(500):
         if (i+1)%100 == 0:
-            print('Running iteration {}'.format(i+1))
+            logging.info('Running iteration {}'.format(i+1))
         dkm, kwm = lda(np_data, k)
     np.savetxt('out_file/dkm.csv', dkm, fmt='%d', delimiter=',')
     np.savetxt('out_file/kwm.csv', kwm, fmt='%d', delimiter=',')
