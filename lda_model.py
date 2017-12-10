@@ -75,6 +75,7 @@ if __name__=="__main__":
     # k = 5
     try:
         k = sys.argv[1]
+        k = int(k)
     except:
         print('Please specify k value')
         exit()
