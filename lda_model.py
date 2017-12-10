@@ -72,7 +72,7 @@ def perplexity(np_data, np_topic, dkm, kwm):
 if __name__=="__main__":
     # hyperparams
     # k = 5
-    file_name = 'out_file/sampled_set.csv'
+    file_name = 'out_file/tiny_set.csv'
     logging.info("Loading input file : {}".format(file_name))
     # np_data = np.genfromtxt(file_name, delimiter=',')
     with open(file_name) as f:
