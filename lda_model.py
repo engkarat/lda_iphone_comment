@@ -65,11 +65,10 @@ def perplexity(np_data, np_topic, dkm, kwm):
                         prop = (
                             dkm[row, i]/np.sum(dkm[row, :]))*(kwm[col, i]/np.sum(kwm[col, :])
                         )
-                        # print(prop)
-                        total_prop.append(np.log(prop)*freq*-1)
+                        total_prop.append(np.log(prop)*freq)
                     else:
                         total_prop.append(0)
-    return np.exp(np.sum(total_prop)/np.sum(np_data))
+    return np.exp(np.sum(total_prop)/np.sum(np_data)*-1)
 
 def main(k):
     file_name = 'out_file/tiny_set.csv'
