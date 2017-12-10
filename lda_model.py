@@ -96,6 +96,7 @@ if __name__=="__main__":
     # print(perp_list)
     # try:
     k = sys.argv[1]
+    k = int(k)
     main(k)
     # except:
     #     print("Please specify K")
